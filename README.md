@@ -47,6 +47,10 @@ Paper ini menunjukkan bahwa model bahasa seperti BERT mampu merepresentasikan pe
 
 ---
 
+# Aplikasi Streamlit
+
+[https://projectgnlp-rjnmoyhbdd3hjvghcuyjbd.streamlit.app/](https://projectgnlp-rjnmoyhbdd3hjvghcuyjbd.streamlit.app/)
+
 # Tujuan Proyek
 
 Tujuan proyek ini adalah:
