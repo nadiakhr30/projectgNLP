@@ -1,6 +1,9 @@
-import mkl
-mkl.set_dynamic(0)
-mkl.set_num_threads(6)
+try:
+    import mkl
+    mkl.set_dynamic(0)
+    mkl.set_num_threads(6)
+except ImportError:
+    print("MKL tidak tersedia, lanjut tanpa MKL")
 
 import torch as th
 import numpy as np
@@ -33,7 +36,8 @@ class TransformerEncoder():
             raise(BaseException('Invalid model_name - %s' % model_name_or_path))
 
         self.nlm_model.eval()
-        self.nlm_model.to('cuda')
+        self.device = 'cuda' if th.cuda.is_available() else 'cpu'
+        self.nlm_model.to(self.device)
 
 
     def encode_token(self, token):
@@ -83,7 +87,7 @@ class TransformerEncoder():
         for tok, tok_encodings in zip(tokens, encodings):
 
             if self.nlm_config['subword_op'] == 'mean':
-                tok_embedding = th.zeros(embeddings.shape[-1]).to('cuda')
+                tok_embedding = th.zeros(embeddings.shape[-1]).to(self.device)
                 for _ in tok_encodings:
                     tok_embedding += embeddings[encoding_idx]
                     encoding_idx += 1
@@ -135,16 +139,19 @@ class TransformerEncoder():
             assert len(sent_encodings) == len(sent_attention)
 
 
-        input_ids = th.tensor(input_ids).to('cuda')
-        input_mask = th.tensor(input_mask).to('cuda')
+        input_ids = th.tensor(input_ids).to(self.device)
+        input_mask = th.tensor(input_mask).to(self.device)
         with th.no_grad():
 
-            if self.nlm_config['model_name_or_path'].startswith('xlnet-'):
-                pooled, batch_hidden_states = self.nlm_model(input_ids, attention_mask=input_mask)
-                last_layer = batch_hidden_states[-1]
+            outputs = self.nlm_model(
+                input_ids,
+                attention_mask=input_mask,
+                output_hidden_states=True
+            )
 
-            else:
-                last_layer, pooled, batch_hidden_states = self.nlm_model(input_ids, attention_mask=input_mask)
+            last_layer = outputs.last_hidden_state
+            pooled = outputs.pooler_output
+            batch_hidden_states = outputs.hidden_states
 
         # select layers of interest
         sel_hidden_states = [batch_hidden_states[i] for i in self.nlm_config['layers']]

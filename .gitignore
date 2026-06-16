@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+
+vectors/
+results/
+
+data/SemCor-13/
+data/SemCor-20/
+semcor_data/

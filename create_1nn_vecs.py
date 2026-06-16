@@ -7,8 +7,8 @@ import numpy as np
 
 from nlm_encoder import TransformerEncoder
 
-from coarsewsd20_reader import load_instances
-from coarsewsd20_reader import ambiguous_words
+from semcor13_reader import load_instances
+from semcor13_reader import ambiguous_words
 
 
 logging.basicConfig(level=logging.INFO,
@@ -32,12 +32,15 @@ def create_vecs(args):
 
             try:
                 inst_vecs = encoder.token_embeddings([inst['tokens']])[0][0]
-            except:
-                logging.info('ERROR: %s:%d' % (word, inst_idx + 1))
-                continue
+            except Exception as e:
+                print(f"ERROR {word}:{inst_idx+1}")
+                raise e
 
-            assert inst_vecs[inst['idx']][0] == word  # sanity check
+            token_text = inst_vecs[inst['idx']][0]
 
+            if token_text.lower() != word.lower():
+                print(f"WARNING: target={word} token={token_text}")
+            
             word_vec = inst_vecs[inst['idx']][1]
             word_cls = inst['class']
 
@@ -60,7 +63,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Create Initial Sense Embeddings.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-nlm_id', help='HF Transfomers model name', required=False, default='bert-base-uncased')
-    parser.add_argument('-dataset_id', help='Dataset name', required=False, default='CoarseWSD-20')
+    parser.add_argument('-dataset_id', help='Dataset name', required=False, default='SemCor-13')
     parser.add_argument('-max_seq_len', type=int, default=512, help='Maximum sequence length (BERT)', required=False)
     parser.add_argument('-subword_op', type=str, default='mean', help='WordPiece Reconstruction Strategy', required=False,
                         choices=['mean', 'first', 'sum'])

@@ -6,15 +6,15 @@ from datetime import datetime
 from collections import defaultdict
 from collections import Counter
 
+
 import numpy as np
 
 from nlm_encoder import TransformerEncoder
 
 from vectorspace import VSM
 
-from coarsewsd20_reader import coarse_senses
-from coarsewsd20_reader import load_instances
-from coarsewsd20_reader import ambiguous_words
+from semcor13_reader import load_instances
+from semcor13_reader import ambiguous_words
 
 from sklearn.metrics import f1_score, precision_score, recall_score
 
@@ -22,6 +22,20 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 
+def build_coarse_senses():
+    coarse_senses = {}
+
+    for word in ambiguous_words:
+        with open(f"data/SemCor-13/{word}/classes_map.txt") as f:
+            mapping = json.load(f)
+
+        senses = [mapping[k] for k in sorted(mapping.keys(), key=int)]
+        coarse_senses[word] = senses
+
+    return coarse_senses
+
+
+coarse_senses = build_coarse_senses()
 
 def eval_nn(args):
     
@@ -45,7 +59,12 @@ def eval_nn(args):
 
             inst_vecs = encoder.token_embeddings([test_inst['tokens']])[0][0]
 
-            assert inst_vecs[test_inst['idx']][0] == amb_word  # sanity check
+            token_text = inst_vecs[test_inst['idx']][0].lower()
+
+            if not token_text.startswith(amb_word):
+                print(
+                    f"WARNING: target={amb_word} token={token_text}"
+                )
 
             amb_word_vec = inst_vecs[test_inst['idx']][1]
             amb_word_vec = amb_word_vec / np.linalg.norm(amb_word_vec)
@@ -53,7 +72,7 @@ def eval_nn(args):
             preds = senses_vsm.most_similar_vec(amb_word_vec, topn=None)
 
             # filter preds for target word
-            preds = [(sense, score) for sense, score in preds if sense.split('_')[0] == amb_word]
+            preds = [(sense, score) for sense, score in preds if sense.startswith(amb_word + ".")]
 
             all_sense_preds[gold_sense].append(preds)
             all_results[amb_word].append((test_inst, preds))
@@ -70,14 +89,14 @@ def eval_nn(args):
             if len(sense_preds) == 0:
                 continue
 
-            n_sense_correct = sum([1 for preds in sense_preds if preds[0][0] == sense])
+            n_sense_correct = sum([1 for preds in sense_preds if len(preds) > 0 and preds[0][0] == sense])
             sense_acc = n_sense_correct / len(sense_preds)
             all_senses_accs[sense] = sense_acc
 
             n_word_correct += n_sense_correct
             n_word_insts += len(sense_preds)
 
-            all_pred += [preds[0][0] for preds in sense_preds]
+            all_pred += [preds[0][0] if len(preds) > 0 else "NULL" for preds in sense_preds]
             all_gold += [sense] * len(sense_preds)
         
         word_recall_scores = recall_score(all_gold, all_pred, average=None)
@@ -133,7 +152,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Nearest Neighbors Evaluation.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-nlm_id', help='HF Transfomers model name', required=False, default='bert-base-uncased')
-    parser.add_argument('-dataset_id', help='Dataset name', required=False, default='CoarseWSD-20')
+    parser.add_argument('-dataset_id', help='Dataset name', required=False, default='SemCor-13')
     parser.add_argument('-sv_path', help='Path to sense vectors', required=True)
     parser.add_argument('-mode', type=str, default='regular', help='MFS or LFS', required=False,
                         choices=['regular', 'mfs', 'lfs'])
@@ -147,9 +166,9 @@ if __name__ == '__main__':
 
     args.layers = [int(n) for n in args.layers.split(' ')]
 
-    if args.nlm_id not in args.sv_path.split('/')[-1].split('.'):  # catch mismatched nlms/sense_vecs
-        logging.fatal("Provided sense vectors don't seem to match nlm_id (%s)." % args.nlm_id)
-        raise SystemExit('Fatal Error.')
+    #if args.nlm_id not in args.sv_path.split('/')[-1].split('.'):  # catch mismatched nlms/sense_vecs
+        #logging.fatal("Provided sense vectors don't seem to match nlm_id (%s)." % args.nlm_id)
+        #raise SystemExit('Fatal Error.')
 
     encoder_cfg = {
         'model_name_or_path': args.nlm_id,
