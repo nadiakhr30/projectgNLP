@@ -4,27 +4,120 @@ import numpy as np
 from nlm_encoder import TransformerEncoder
 from vectorspace import VSM
 
+# ==================================================
+# PAGE CONFIG
+# ==================================================
+
 st.set_page_config(
     page_title="Word Sense Disambiguation",
-    layout="centered"
+    layout="wide"
 )
 
 # ==================================================
-# STYLE
+# CUSTOM CSS
 # ==================================================
 
 st.markdown("""
 <style>
-.main {
-    padding-top: 1rem;
+
+.stApp{
+    background: linear-gradient(
+        135deg,
+        #0f172a 0%,
+        #1e293b 100%
+    );
 }
 
-.result-box {
-    padding: 1rem;
-    border-radius: 10px;
-    border: 1px solid #dddddd;
-    background-color: #f8f9fa;
+section[data-testid="stSidebar"]{
+    background-color:#111827;
 }
+
+.hero{
+    padding:30px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.1);
+    margin-bottom:25px;
+}
+
+.hero-title{
+    font-size:42px;
+    font-weight:700;
+    color:white;
+}
+
+.hero-sub{
+    color:#cbd5e1;
+    font-size:16px;
+    margin-top:10px;
+}
+
+.stat-card{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 4px 15px rgba(0,0,0,0.15);
+}
+
+.stat-title{
+    font-size:14px;
+    color:#64748b;
+}
+
+.stat-value{
+    font-size:24px;
+    font-weight:700;
+    color:#2563eb;
+}
+
+.result-card{
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+    color:white;
+    border-radius:16px;
+    padding:25px;
+    text-align:center;
+}
+
+.result-title{
+    font-size:14px;
+    opacity:0.85;
+}
+
+.result-value{
+    font-size:24px;
+    font-weight:700;
+    margin-top:10px;
+}
+
+.stButton > button{
+    width:100%;
+    height:50px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+    color:white;
+    font-size:16px;
+    font-weight:600;
+}
+
+.stButton > button:hover{
+    background:linear-gradient(
+        135deg,
+        #1d4ed8,
+        #6d28d9
+    );
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -32,16 +125,20 @@ st.markdown("""
 # HEADER
 # ==================================================
 
-st.title("Word Sense Disambiguation")
-
 st.markdown("""
-Sistem disambiguasi makna kata menggunakan **BERT Base Uncased**
-dan metode **1-Nearest Neighbor (1-NN)** berdasarkan dataset
-**SemCor-13**.
+<div class="hero">
+    <div class="hero-title">
+        Word Sense Disambiguation
+    </div>
 
-Masukkan kalimat yang mengandung kata ambigu,
-kemudian pilih kata target untuk memperoleh prediksi sense.
-""")
+    <div class="hero-sub">
+        Sistem disambiguasi makna kata menggunakan
+        BERT Base Uncased dan metode
+        1-Nearest Neighbor (1-NN)
+        berbasis dataset SemCor-13.
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 # ==================================================
 # SIDEBAR
@@ -49,22 +146,26 @@ kemudian pilih kata target untuk memperoleh prediksi sense.
 
 with st.sidebar:
 
-    st.header("Informasi Model")
+    st.title("Informasi Model")
 
-    st.write("Model : BERT Base Uncased")
-    st.write("Metode : 1-NN")
-    st.write("Dataset : SemCor-13")
+    st.markdown("""
+    **Model**  
+    BERT Base Uncased
 
-    st.divider()
+    **Metode**  
+    1-Nearest Neighbor (1-NN)
 
-    st.write(
-        """
-        Aplikasi ini menentukan makna kata ambigu
-        berdasarkan kemiripan embedding kontekstual
-        dengan sense vector yang telah dibangun
-        dari dataset SemCor.
-        """
-    )
+    **Dataset**  
+    SemCor-13
+
+    ---
+    
+    Aplikasi ini menentukan makna kata ambigu
+    berdasarkan embedding kontekstual yang
+    dihasilkan oleh BERT dan dibandingkan
+    dengan sense vector hasil pelatihan
+    pada dataset SemCor-13.
+    """)
 
 # ==================================================
 # LOAD MODEL
@@ -95,6 +196,38 @@ def load_model():
 encoder, senses_vsm = load_model()
 
 # ==================================================
+# STATISTIK
+# ==================================================
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("""
+    <div class="stat-card">
+        <div class="stat-title">Jumlah Kata Ambigu</div>
+        <div class="stat-value">13</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    <div class="stat-card">
+        <div class="stat-title">Model</div>
+        <div class="stat-value">BERT</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="stat-card">
+        <div class="stat-title">Metode</div>
+        <div class="stat-value">1-NN</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.write("")
+
+# ==================================================
 # KATA AMBIGU
 # ==================================================
 
@@ -114,16 +247,16 @@ ambiguous_words = [
     "work"
 ]
 
-st.subheader("Input")
+st.subheader("Input Kalimat")
 
 sentence = st.text_area(
-    "Kalimat",
+    "Masukkan kalimat yang mengandung kata ambigu",
     height=120,
     placeholder="Contoh: The case was discussed in court yesterday."
 )
 
 target_word = st.selectbox(
-    "Kata ambigu",
+    "Pilih kata ambigu",
     ambiguous_words
 )
 
@@ -186,21 +319,36 @@ if st.button(
 
             best_sense, best_score = preds[0]
 
+        st.markdown("---")
         st.subheader("Hasil Prediksi")
 
-        col1, col2 = st.columns(2)
+        c1, c2 = st.columns(2)
 
-        with col1:
-            st.metric(
-                "Sense",
-                best_sense
-            )
+        with c1:
+            st.markdown(f"""
+            <div class="result-card">
+                <div class="result-title">
+                    Sense Terpilih
+                </div>
+                <div class="result-value">
+                    {best_sense}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
-        with col2:
-            st.metric(
-                "Similarity",
-                f"{best_score:.4f}"
-            )
+        with c2:
+            st.markdown(f"""
+            <div class="result-card">
+                <div class="result-title">
+                    Similarity Score
+                </div>
+                <div class="result-value">
+                    {best_score:.4f}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.write("")
 
         st.progress(
             min(float(best_score), 1.0)
@@ -208,8 +356,8 @@ if st.button(
 
         st.caption(
             "Nilai similarity menunjukkan tingkat kemiripan "
-            "antara embedding kata dalam kalimat dengan "
-            "sense vector yang tersimpan pada model."
+            "antara embedding kata dalam konteks kalimat "
+            "dengan sense vector yang tersimpan pada model."
         )
 
     except Exception as e:
