@@ -20,102 +20,129 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-.stApp{
-    background: linear-gradient(
-        135deg,
-        #0f172a 0%,
-        #1e293b 100%
-    );
+[data-testid="stAppViewContainer"]{
+    background:#f4f7fb;
+}
+
+.main .block-container{
+    max-width:1200px;
+    padding-top:2rem;
+    padding-bottom:2rem;
 }
 
 section[data-testid="stSidebar"]{
-    background-color:#111827;
+    background:#ffffff;
+    border-right:1px solid #e5e7eb;
 }
 
 .hero{
-    padding:30px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(10px);
-    border:1px solid rgba(255,255,255,0.1);
-    margin-bottom:25px;
+    background:white;
+    padding:35px;
+    border-radius:24px;
+    border:1px solid #e5e7eb;
+    box-shadow:0 10px 30px rgba(15,23,42,.06);
+    margin-bottom:30px;
 }
 
 .hero-title{
-    font-size:42px;
-    font-weight:700;
-    color:white;
+    font-size:46px;
+    font-weight:800;
+    color:#0f172a;
+    margin-bottom:10px;
 }
 
 .hero-sub{
-    color:#cbd5e1;
-    font-size:16px;
-    margin-top:10px;
+    color:#64748b;
+    font-size:17px;
+    line-height:1.8;
 }
 
 .stat-card{
     background:white;
-    border-radius:16px;
-    padding:20px;
+    border-radius:20px;
+    padding:28px;
     text-align:center;
-    box-shadow:0 4px 15px rgba(0,0,0,0.15);
+    border:1px solid #e5e7eb;
+    box-shadow:0 4px 15px rgba(15,23,42,.05);
 }
 
 .stat-title{
-    font-size:14px;
     color:#64748b;
+    font-size:14px;
+    margin-bottom:10px;
 }
 
 .stat-value{
-    font-size:24px;
-    font-weight:700;
     color:#2563eb;
+    font-size:30px;
+    font-weight:700;
 }
 
 .result-card{
-    background:linear-gradient(
-        135deg,
-        #2563eb,
-        #7c3aed
-    );
-    color:white;
-    border-radius:16px;
-    padding:25px;
+    background:white;
+    border-radius:20px;
+    padding:30px;
     text-align:center;
+    border-left:6px solid #2563eb;
+    box-shadow:0 10px 25px rgba(15,23,42,.08);
 }
 
 .result-title{
+    color:#64748b;
     font-size:14px;
-    opacity:0.85;
+    text-transform:uppercase;
+    letter-spacing:1px;
 }
 
 .result-value{
-    font-size:24px;
+    color:#0f172a;
+    font-size:26px;
     font-weight:700;
-    margin-top:10px;
+    margin-top:12px;
+}
+
+.stTextArea textarea{
+    border-radius:14px !important;
+    border:1px solid #dbe2ea !important;
+}
+
+.stSelectbox > div > div{
+    border-radius:14px !important;
 }
 
 .stButton > button{
     width:100%;
-    height:50px;
+    height:56px;
     border:none;
-    border-radius:12px;
-    background:linear-gradient(
-        135deg,
-        #2563eb,
-        #7c3aed
-    );
+    border-radius:14px;
+    background:#2563eb;
     color:white;
     font-size:16px;
-    font-weight:600;
+    font-weight:700;
+    transition:.2s;
 }
 
 .stButton > button:hover{
-    background:linear-gradient(
-        135deg,
-        #1d4ed8,
-        #6d28d9
-    );
+    background:#1d4ed8;
+    transform:translateY(-1px);
+}
+
+[data-testid="stMetric"]{
+    background:white;
+    padding:15px;
+    border-radius:16px;
+}
+
+.stProgress > div > div > div{
+    background:#2563eb;
+}
+
+h1,h2,h3{
+    color:#0f172a;
+}
+
+label{
+    font-weight:600 !important;
 }
 
 </style>
@@ -132,10 +159,10 @@ st.markdown("""
     </div>
 
     <div class="hero-sub">
-        Sistem disambiguasi makna kata menggunakan
-        BERT Base Uncased dan metode
-        1-Nearest Neighbor (1-NN)
-        berbasis dataset SemCor-13.
+        Sistem Word Sense Disambiguation berbasis
+        BERT Base Uncased dan metode 1-Nearest Neighbor (1-NN)
+        untuk menentukan makna kata ambigu berdasarkan
+        konteks kalimat pada dataset SemCor-13.
     </div>
 </div>
 """, unsafe_allow_html=True)
