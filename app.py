@@ -108,8 +108,14 @@ if st.button("Prediksi Sense"):
         preds = [
             (sense, score)
             for sense, score in preds
-            if sense.split("_")[0] == target_word
+            if sense.split("_")[0].lower() == target_word.lower()
         ]
+
+        if len(preds) == 0:
+            st.error(
+                f"Tidak ditemukan sense untuk kata '{target_word}'"
+            )
+            st.stop()
 
         best_sense, best_score = preds[0]
 
