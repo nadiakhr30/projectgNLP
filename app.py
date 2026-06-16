@@ -108,9 +108,8 @@ if st.button("Prediksi Sense"):
         preds = [
             (sense, score)
             for sense, score in preds
-            if sense.split("_")[0].lower() == target_word.lower()
+            if sense.lower().startswith(target_word.lower() + ".")
         ]
-
         if len(preds) == 0:
             st.error(
                 f"Tidak ditemukan sense untuk kata '{target_word}'"
