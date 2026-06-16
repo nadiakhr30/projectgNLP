@@ -1,2 +1,9 @@
-nltk==3.4.5
+streamlit
+numpy
+scikit-learn
+nltk
+torch
+transformers
+tqdm
+requestsnltk==3.4.5
 transformers==2.5.1
