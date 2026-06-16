@@ -1,0 +1,15 @@
+1	A point like p gets information directly from n , but all information beyond n is indirectly relayed through n .
+14	Any other point of intersection between C and **f will be called a tangent point .
+13	To each paired vertex and diagonal point there corresponds a unique forward corner point , i.e. , the corner on C reached first by proceeding along C from the vertex in the direction of increasing t .
+11	This prevents the occurrence of an infinite sequence of isolated tangent points .
+14	A square inscribed in a curve C means a square with its four corner points on the curve , though it may not lie entirely in the interior of C .
+27	With each vertex we associate certain numerical values , namely the set of positive differences in the parameter t between the vertex and its corresponding forward corner points .
+17	In Chapters 3 and 4 we answered questions like those in the examples , usually by counting points in a sample space .
+38	In the neighborhood of an end point of an interval of tangent points in the f-plane the function is two valued or no valued on one side , and is a single valued function consisting entirely of tangent points on the other side .
+10	If their schedules were to synchronize , there was no point in wasting time .
+23	It may be , of course , that such objectives can be pursued consisently with a policy designed to overthrow Communism ; my point is that where conflicts arise they must always be resolved in favor of achieving the indispensable condition for a tolerant world - the absence of Soviet Communist power .
+35	In the Analytical phase of their Cubism , Braque and Picasso had not only had to minimize three-dimensionality simply in order to preserve it ; they had also had to generalize it - to the point , finally , where the illusion of depth and relief became abstracted from specific three-dimensional entities and was rendered largely as the illusion of depth and relief as such : as a disembodied attribute and expropriated property detached from everything not itself .
+2	A tangent point Q in the C-plane occurs when C and **f are tangent to one another .
+5	`` You 're missing the point '' , he said .
+20	Thus **f is also continuous at **f , and in a neighborhood of **f which does not contain a tangent point .
+27	Now **f and **f must both be tangent points on the nth component in the f-plane ; otherwise by Lemma 1 the component would extend beyond these points .

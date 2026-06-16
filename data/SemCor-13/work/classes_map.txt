@@ -1,0 +1,9 @@
+{
+  "0": "employment.n.02",
+  "1": "function.v.01",
+  "2": "work.n.01",
+  "3": "work.n.02",
+  "4": "work.v.01",
+  "5": "work.v.02",
+  "6": "work.v.03"
+}

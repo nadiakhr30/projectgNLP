@@ -1,0 +1,6 @@
+{
+  "0": "confront.v.01",
+  "1": "confront.v.02",
+  "2": "face.n.01",
+  "3": "face.n.03"
+}

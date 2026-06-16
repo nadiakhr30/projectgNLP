@@ -1,0 +1,56 @@
+12	In the neighborhood of an end point of an interval of tangent points in the f-plane the function is two valued or no valued on one side , and is a single valued function consisting entirely of tangent points on the other side .
+6	To each paired vertex and diagonal point there corresponds a unique forward corner point , i.e. , the corner on C reached first by proceeding along C from the vertex in the direction of increasing t .
+12	We again consider a fixed point P at **f and a variable point Q at **f on C .
+24	The set of intersections of **f , the rotated curve , with the original curve C consists of just the set of forward corner points on C corresponding to the vertex at **f , plus the vertex itself .
+12	From the rather tortuous history of electoral planning in Morocco an important point emerges concerning the first elections in a developing country and evaluating their results .
+64	The fact that there can not be any limit points of the set except in closed intervals follows from the argument used in Lemma 1 , namely , that near any tangent point in the C-plane the curves C and **f are analytic , and therefore the difference between them must be a monotone function in some neighborhood on either side of the tangent point .
+14	We must now show that on some component of the graph there exist two points for which the corresponding diagonal points in the C-plane are on opposite sides of C .
+5	The square has one corner point on the straight line segment , and does not lie entirely in the interior .
+10	The first possibility results in a closed interval of tangent points in the f-plane , the end points of which fall into category ( b ) or ( c ) .
+1	The points may also touch C without crossing .
+16	He was not sure what effect it would have , but that was really beside the point when you got right down to it .
+12	She thrust the envelope back in the bag ; there was no point in locking it up in the armoire now , it was like locking the barn after the horse was stolen .
+9	As s increases we consider the two free corner points of the square , **f and **f , adjacent to P and Q respectively .
+1	My point is this :
+13	Never mind whether the Kikiyus and the Bantus enjoyed Wilsonian self-determination : the point is that in the struggle for the world that vast land mass was under the domination and influence of the West .
+6	This set must consist of isolated points and closed intervals .
+2	A second point requires more extended comment .
+1	Each point with abscissa t on the graph represents an intersection between C and **f .
+3	There was no point either in telling herself again what a fool she 'd been .
+1	His point is not that mythology may not be used , but that it may no longer be regarded as the only or even the most appropriate conceptuality for expressing the Christian kerygma .
+20	We must now show that on some component of the graph there exist two points for which the corresponding diagonal points in the C-plane are on opposite sides of C .
+5	We again consider a fixed point P at **f and a variable point Q at **f on C .
+8	Now **f and **f must both be tangent points on the nth component in the f-plane ; otherwise by Lemma 1 the component would extend beyond these points .
+27	It will be noted that point f has seven nearest neighbors , h and e have six , and p has only one , while the remaining points have intermediate numbers .
+21	In any social system in which communications have an importance comparable with that of production and other human factors , a point like f in Figure 2 would ( other things being equal ) be the dwelling place for the community leader , while e and h would house the next most important citizens .
+32	The fact that there can not be any limit points of the set except in closed intervals follows from the argument used in Lemma 1 , namely , that near any tangent point in the C-plane the curves C and **f are analytic , and therefore the difference between them must be a monotone function in some neighborhood on either side of the tangent point .
+6	But that is not exactly my point .
+17	Each point on C , as a vertex , may possess a finite number of corresponding diagonal points by the above construction .
+3	A second major point of this essay is to examine the formal arrangements for the elections .
+5	It will be noted that point f has seven nearest neighbors , h and e have six , and p has only one , while the remaining points have intermediate numbers .
+9	In some neighborhood in the f-plane of any ordinary point of the graph , the function f is a single valued , continuous function .
+19	We note that two such curves C and **f , cannot coincide at more than a finite number of points ; otherwise , being analytic , they would coincide at all points , which is impossible since they do not coincide near **f .
+2	An ordinary point will be any point of intersection A such that in every neighborhood of A in the C-plane , **f meets both the interior and the exterior of C .
+13	The remaining ( incomplete ) components all have an even number of ordinary points at any argument , and are defined only on a proper sub-interval of [ 0 , T ] .
+4	The fourth and concluding point will be to estimate the long-run significance of the elections and how they figure in the current pattern of internal politics .
+11	On C , from the point P at **f to the point Q at **f , we construct the chord , and upon the chord as a side erect a square in such a way that as s approaches zero the square is inside C .
+9	This terminology will also be applied to the corresponding points in the f-plane .
+3	`` The important point is that both be satisfied with the adjustment '' .
+8	In the f-plane the coordinates of the corresponding point are **f .
+6	A hypothetical example will illustrate this point .
+29	For any such square the middle corner of these will be called the vertex of the square and the corner not on the curve will be called the diagonal point of the square .
+1	Each point on C , as a vertex , may possess a finite number of corresponding diagonal points by the above construction .
+18	First , for any value of t for which all values of f ( t ) are ordinary points the number of values of f ( t ) must be odd .
+7	In some neighborhood of an isolated tangent point in the f-plane , say **f , the function **f is either double valued or has no values defined , except at the tangent point itself , where it is single valued .
+6	Table 7 - 1 illustrates the point .
+26	Therefore , for any value of t the number of values of f ( t ) is equal to the ( finite ) number of tangent points corresponding to the argument t plus an odd number .
+5	On C , from the point P at **f to the point Q at **f , we construct the chord , and upon the chord as a side erect a square in such a way that as s approaches zero the square is inside C .
+27	In such a case , any attitude would be as fitting or unfitting as any other , which means that the notion of fitness has lost all point .
+24	Further , we see by Lemma 2 that the multiplicity of f can only change at a tangent point , and at such a point can only change by an even integer .
+48	We first define a function b ( t ) as follows : given the set of squares such that each has three corners on C and vertex at t , b ( t ) is the corresponding set of positive parametric differences between t and the backward corner points .
+6	We have **f , plus tangent points .
+8	We turn now to the set of tangent points on the graph .
+31	We note that two such curves C and **f , cannot coincide at more than a finite number of points ; otherwise , being analytic , they would coincide at all points , which is impossible since they do not coincide near **f .
+3	But the main point here is that even if such a restatement were not possible , the demand to demythologize the kerygma would still be unavoidable .
+32	In some neighborhood of an isolated tangent point in the f-plane , say **f , the function **f is either double valued or has no values defined , except at the tangent point itself , where it is single valued .
+18	Further , we see by Lemma 2 that the multiplicity of f can only change at a tangent point , and at such a point can only change by an even integer .

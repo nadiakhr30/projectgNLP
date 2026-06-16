@@ -1,0 +1,49 @@
+14	the list of dictionary forms and the file of information that pertains to these forms .
+2	The full forms can be derived from such information just prior to the lookup of the form in the text form list .
+9	We accomplish this by compiling a list of text forms as text is read by the computer .
+20	The address of the first cell and the number of cells used is written in the information cell for the form .
+21	The practical operational problem of lexicostatistics is the establishment of a basic list of items of meaning against which the particular forms or terms of languages can be matched as the medium of comparison .
+12	The general Protestant conviction is that motives , rather than methods , form the primary moral issue , provided the methods are limited to the prevention of conception '' .
+21	In other words , if f satisfies the differential equation * * f , then f is uniquely expressible in the form * * f where * * f satisfies the differential equation * * f .
+5	First , is the circulating form of the hormone the same as that found in the gland where it is synthesised and stored ?
+4	The number of dictionary forms skipped since the last one matched is also saved .
+5	For example , the inflected forms of a word can be represented , insofar as regular inflection allows , by a stem and a set of endings to be attached .
+20	The corporation in America is in reality our form of socialism , vying in a sense with the other socialistic form that has emerged within governmental bureaucracy .
+14	They never troubled themselves about us while we were playing , because the fence formed such a definite boundary and `` Do n't go outside the gate '' was a command so impossible of misinterpretation .
+41	And like this English master , Mason realizes his subjects in large , simplified masses which , though they seem effortless , are in reality the result of skilled design born of hard work and a thorough distillation of the natural form that inspired them .
+46	The only requirements on dictionary information made by the text lookup operation are that each form represented by the dictionary be available for lookup in the text form list and that information for each form be available in a sequence identical with the sequence of the forms .
+13	At the central level the scrutin uninominal voting system was selected over some form of the scrutin de liste system , even though the latter had been recommended by Duverger and favored by all political parties .
+5	Dictionary forms found to match forms in the text list are marked .
+17	The peddler came bawling his wares and told them of the convention in Wheeling , Which had formed a new state government by declaring the government at Richmond in the east illegal because they were traitors .
+24	This is brought out in the next to last chapter of the book , `` A Hero 's Funeral '' , written in the form of an impassioned prose poem .
+27	If each text form is marked when matched with a dictionary form , the text forms not contained in the dictionary can be identified when all dictionary forms have been read .
+14	`` What I am saying does not mean that there will henceforth be no form in art .
+7	The importance of knowing in what chemical forms the hormone may exist is accentuated by the recent observation that there exists an abnormally long-acting TSH in blood drawn from many thyrotoxic patients ( Adams , 1958 ) .
+14	But let us not complain of the evils of capitalism by referring to a form that is not truly capitalistic .
+20	A random storage scheme , based on the spelling of forms , provides an economical way to compile this text form list .
+15	Moreover , the most artistically successful of the nonfiction films have invariably borrowed the narrative form from the fiction feature .
+24	The valley lay clear , and open to the eye , right up to the sharp limbed line of gaunt , scoured hills that formed the horizon twenty miles ahead .
+6	The appropriate action for handling these forms can be taken at that time .
+14	The address * * f and the number of cells required to store the form are written in * * f ; the information cell * * f is saved to represent the text occurrence .
+20	If cell * * f has not previously been assigned as the information cell of a form in the text form list , it is now assigned as the information cell of * * f .
+18	How literature does this , or for whom , is certainly not clear , but the content , form , and language of the `` message '' , as well as the source , would all play differentiated parts in giving and molding a sense of purpose .
+22	Though , taken individually , the big rooms were , or seemed to be , square , the apartment as a whole formed a triangle .
+13	The State Ballet of Rhode Island , the first incorporated group , was formed for the purpose of extending knowledge of the art of ballet in the Community , to promote interest in ballet performances , to contribute to the cultural life of the State , and to provide opportunity for gifted dance students who , for one reason or another , are unable to pursue a career and to develop others for the professional state ; And now , therefore , do I , John A. Notte , Jr. , Governor of the State of Rhode Island and Providence Plantations , proclaim the week of Monday , November 13 , 1961 , as the State Ballet of Rhode Island Week , requesting all Rhode Islanders to give special attention to this unusual event which should contribute to the cultural life of the State .
+24	I have chosen to use the word `` mimesis '' in its Christian rather than its classic implications and to discover in the concrete forms of both art and myth powers of theological expression which , as in the Christian mind , are the direct consequence of involvement in historical experience , which are not reserved , as in the Greek mind , only to moments of theoretical reflection .
+17	There is no conclusive evidence yet that either of the proteases has been prepared in highly purified form nor is their specificity known .
+24	Such an operator is obviously the zero operator ; for since it is nilpotent , the minimal polynomial for this operator is of the form * * f for some * * f ; but then since the operator is diagonalizable , the minimal polynomial cannot have a repeated root ; hence * * f and the minimal polynomial is simply x , which says the operator is 0 .
+79	To a much less full extent , the hebephrenic person 's belching or flatus has a comparable communicative function ; in working with these patients the therapist eventually gets to do some at least private mulling over of the possible meaning of a belch , or the passage of flatus , not only because he is reduced to this for lack of anything else to analyze , but also because he learns that even these animal like sounds constitute forms of communication in which , from time to time , quite different things are being said , long before the patient can become sufficiently aware of these , as distinct feelings and concepts , to say them in words .
+7	When this and other units combined to form the present group , it was taken on as a continuing fund-raiser .
+6	The discovery that movies are a form of fiction was made in the early years of this century and it was made chiefly by two men , a French magician , Georges Melies , and an American employee of Edison , Edwin S. Porter .
+12	The three leaders of Laos agreed today to begin negotiations tomorrow on forming a coalition government that would unite the war-ridden kingdom .
+21	A random address * * f that lies within the X-region of memory mentioned earlier is computed from the i-th dictionary form .
+1	The form of galvanic activity is halfway between the magnetic form and the electrical form .
+43	In all his miscalculations , Stravinsky made the fatal historical blunder of presuming that he could transform other composers ' inspirations - representing many peoples , time periods and styles - into his own music by warping the harmony , melody , or form , to verify his own experiments .
+18	When the smaller facet-planes of Analytical Cubism were placed upon or juxtaposed with the large , dense shapes formed by the affixed materials of the collage , they had to coalesce - become `` synthesized '' - into larger planar shapes themselves simply in order to maintain the integrity of the picture plane .
+25	Each dictionary form is looked up in the text form list by the same method used to look up a new text occurrence in the form list during text reading .
+29	And yet this is exactly the risk we run when we assume , as we too often do , that we can continue to preach the gospel in a form that makes it seem incredible and irrelevant to cultured men .
+16	If cell * * f is not an information cell we conclude that the i-th dictionary form is not in the text list .
+9	Text reading is terminated when a pre-determined number of forms have been stored in the text form list .
+5	The army leaders threatened to form a new military government if the parties failed to sign an eight point protocol agreeing on Gen. Gursel as president .
+40	This conception was taken up by the early Church Fathers and by canon lawyers and theologians in the Middle Ages ; and More was far too well read not to have come across it in one or several of the forms thus given it .
+8	These two pieces of information for each dictionary form that is matched by a text form constitute the table of dictionary usage .

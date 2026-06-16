@@ -1,0 +1,5 @@
+{
+  "0": "interest.n.01",
+  "1": "interest.n.03",
+  "2": "sake.n.01"
+}
