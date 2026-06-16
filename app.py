@@ -4,14 +4,71 @@ import numpy as np
 from nlm_encoder import TransformerEncoder
 from vectorspace import VSM
 
-st.set_page_config(page_title="WSD SemCor-13")
+st.set_page_config(
+    page_title="Word Sense Disambiguation",
+    layout="centered"
+)
+
+# ==================================================
+# STYLE
+# ==================================================
+
+st.markdown("""
+<style>
+.main {
+    padding-top: 1rem;
+}
+
+.result-box {
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+    background-color: #f8f9fa;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ==================================================
+# HEADER
+# ==================================================
 
 st.title("Word Sense Disambiguation")
-st.write("BERT Base Uncased + 1-NN (SemCor-13)")
 
-# --------------------------------------------------
-# Load model sekali saja
-# --------------------------------------------------
+st.markdown("""
+Sistem disambiguasi makna kata menggunakan **BERT Base Uncased**
+dan metode **1-Nearest Neighbor (1-NN)** berdasarkan dataset
+**SemCor-13**.
+
+Masukkan kalimat yang mengandung kata ambigu,
+kemudian pilih kata target untuk memperoleh prediksi sense.
+""")
+
+# ==================================================
+# SIDEBAR
+# ==================================================
+
+with st.sidebar:
+
+    st.header("Informasi Model")
+
+    st.write("Model : BERT Base Uncased")
+    st.write("Metode : 1-NN")
+    st.write("Dataset : SemCor-13")
+
+    st.divider()
+
+    st.write(
+        """
+        Aplikasi ini menentukan makna kata ambigu
+        berdasarkan kemiripan embedding kontekstual
+        dengan sense vector yang telah dibangun
+        dari dataset SemCor.
+        """
+    )
+
+# ==================================================
+# LOAD MODEL
+# ==================================================
 
 @st.cache_resource
 def load_model():
@@ -37,9 +94,9 @@ def load_model():
 
 encoder, senses_vsm = load_model()
 
-# --------------------------------------------------
-# kata ambigu
-# --------------------------------------------------
+# ==================================================
+# KATA AMBIGU
+# ==================================================
 
 ambiguous_words = [
     "case",
@@ -57,31 +114,37 @@ ambiguous_words = [
     "work"
 ]
 
+st.subheader("Input")
+
 sentence = st.text_area(
-    "Masukkan kalimat",
-    height=120
+    "Kalimat",
+    height=120,
+    placeholder="Contoh: The case was discussed in court yesterday."
 )
 
 target_word = st.selectbox(
-    "Pilih kata ambigu",
+    "Kata ambigu",
     ambiguous_words
 )
 
-# --------------------------------------------------
-# prediksi
-# --------------------------------------------------
+# ==================================================
+# PREDIKSI
+# ==================================================
 
-if st.button("Prediksi Sense"):
+if st.button(
+    "Prediksi Sense",
+    use_container_width=True
+):
 
     if sentence.strip() == "":
-        st.error("Masukkan kalimat terlebih dahulu")
+        st.warning("Masukkan kalimat terlebih dahulu.")
         st.stop()
 
     tokens = sentence.lower().split()
 
     if target_word not in tokens:
-        st.error(
-            f"Kata '{target_word}' tidak ditemukan dalam kalimat"
+        st.warning(
+            f"Kata '{target_word}' tidak ditemukan dalam kalimat."
         )
         st.stop()
 
@@ -89,45 +152,64 @@ if st.button("Prediksi Sense"):
 
     try:
 
-        inst_vecs = encoder.token_embeddings(
-            [tokens]
-        )[0][0]
+        with st.spinner("Memproses prediksi..."):
 
-        word_vec = inst_vecs[idx][1]
+            inst_vecs = encoder.token_embeddings(
+                [tokens]
+            )[0][0]
 
-        word_vec = (
-            word_vec /
-            np.linalg.norm(word_vec)
-        )
+            word_vec = inst_vecs[idx][1]
 
-        preds = senses_vsm.most_similar_vec(
-            word_vec,
-            topn=None
-        )
-
-        preds = [
-            (sense, score)
-            for sense, score in preds
-            if sense.lower().startswith(target_word.lower() + ".")
-        ]
-        if len(preds) == 0:
-            st.error(
-                f"Tidak ditemukan sense untuk kata '{target_word}'"
+            word_vec = (
+                word_vec /
+                np.linalg.norm(word_vec)
             )
-            st.stop()
 
-        best_sense, best_score = preds[0]
+            preds = senses_vsm.most_similar_vec(
+                word_vec,
+                topn=None
+            )
 
-        st.success("Prediksi berhasil")
+            preds = [
+                (sense, score)
+                for sense, score in preds
+                if sense.lower().startswith(
+                    target_word.lower() + "."
+                )
+            ]
 
-        st.subheader("Hasil")
+            if len(preds) == 0:
+                st.error(
+                    f"Tidak ditemukan sense untuk kata '{target_word}'"
+                )
+                st.stop()
 
-        st.write(
-            f"**Sense:** {best_sense}"
+            best_sense, best_score = preds[0]
+
+        st.subheader("Hasil Prediksi")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric(
+                "Sense",
+                best_sense
+            )
+
+        with col2:
+            st.metric(
+                "Similarity",
+                f"{best_score:.4f}"
+            )
+
+        st.progress(
+            min(float(best_score), 1.0)
         )
 
-        st.write(
-            f"**Similarity:** {best_score:.4f}"
+        st.caption(
+            "Nilai similarity menunjukkan tingkat kemiripan "
+            "antara embedding kata dalam kalimat dengan "
+            "sense vector yang tersimpan pada model."
         )
 
     except Exception as e:
