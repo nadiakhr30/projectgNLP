@@ -1,105 +1,359 @@
-# Analysis of BERT for Word Sense Disambiguation
+# Analisis BERT untuk Word Sense Disambiguation (WSD) Menggunakan Dataset SemCor-13
 
-This repository contains code and datasets for running the main experiments covered in ["Analysis and Evaluation of Language Models for Word Sense Disambiguation"](https://arxiv.org/abs/2008.11608) (Computational Linguistics, 2021).
+## Deskripsi Proyek
 
-# CoarseWSD-20
+Proyek ini merupakan pengembangan dari repository **BERT Disambiguation** milik Daniel Loureiro yang digunakan untuk melakukan penelitian pada tugas **Word Sense Disambiguation (WSD)**.
 
-The CoarseWSD-20 dataset is a coarse-grained sense disambiguation built from Wikipedia (nouns only) targetting 2 to 5 senses of 20 ambiguous words.
-It was specifically designed to provide an ideal setting for evaluating WSD models (e.g. no senses in test sets missing from training), both quantitavely and qualitatively.
+Pada proyek ini dilakukan adaptasi sistem agar dapat berjalan pada dataset **SemCor-13**, kemudian dilakukan ekstraksi representasi makna kata menggunakan model **BERT Base Uncased** dan evaluasi menggunakan metode **1-Nearest Neighbor (1NN)**.
 
-In this repository we share the following versions of the CoarseWSD-20 dataset used in our experiments:
+Word Sense Disambiguation (WSD) adalah tugas dalam Natural Language Processing (NLP) yang bertujuan menentukan makna yang benar dari sebuah kata ambigu berdasarkan konteks kalimat.
 
-- [Full CoarseWSD-20](https://github.com/danlou/bert-disambiguation/tree/master/data/CoarseWSD-20)
-- [Balanced](https://github.com/danlou/bert-disambiguation/tree/master/data/CoarseWSD-20_balanced)
-- [Nshots (1, 3, 10, 30 - w/3 sets for each)](https://github.com/danlou/bert-disambiguation/tree/master/data/CoarseWSD-20_nshot)
-- [Fractional (1%, 5%, 10%, 50%, 100%)](https://github.com/danlou/bert-disambiguation/tree/master/data/CoarseWSD-20_ratios)
-- [Out-of-domain](https://github.com/danlou/bert-disambiguation/blob/master/data/CoarseWSD-20.outofdomain.tsv)
+Contoh:
 
+> "He sat on the bank of the river"
 
-# Installation
+Kata **bank** berarti tepi sungai.
 
-### Prepare Environment
+> "She deposited money in the bank"
 
-This project was developed on Python 3.6.5 from Anaconda distribution v4.6.2. As such, the pip requirements assume you already have packages that are included with Anaconda (numpy, etc.).
-After cloning the repository, we recommend creating and activating a new environment to avoid any conflicts with existing installations in your system:
+Kata **bank** berarti institusi keuangan.
+
+Sistem WSD bertugas menentukan makna yang tepat berdasarkan konteks kalimat.
+
+---
+
+# Referensi Paper
+
+Proyek ini mengacu pada paper:
+
+**Analysis and Evaluation of Language Models for Word Sense Disambiguation**
+
+Penulis:
+
+* Daniel Loureiro
+* Kiamehr Rezaee
+* Mohammad Taher Pilehvar
+* Jose Camacho-Collados
+
+Link Paper:
+
+[Analysis and Evaluation of Language Models for Word Sense Disambiguation (MIT Press)](https://direct.mit.edu/coli/article/47/2/387/98520/Analysis-and-Evaluation-of-Language-Models-for?utm_source=chatgpt.com)
+
+Versi ArXiv:
+
+[ArXiv Paper (2008.11608)](https://arxiv.org/abs/2008.11608?utm_source=chatgpt.com)
+
+Paper ini menunjukkan bahwa model bahasa seperti BERT mampu merepresentasikan perbedaan makna kata dengan baik dan metode feature extraction menggunakan embedding BERT cukup efektif untuk tugas Word Sense Disambiguation. ([MIT Press Direct][1])
+
+---
+
+# Tujuan Proyek
+
+Tujuan proyek ini adalah:
+
+1. Memahami konsep Word Sense Disambiguation (WSD)
+2. Menggunakan embedding BERT untuk representasi makna kata
+3. Membuat sense vector dari dataset SemCor-13
+4. Melakukan klasifikasi makna kata menggunakan metode Nearest Neighbor
+5. Mengevaluasi performa model pada data uji
+
+---
+
+# Dataset
+
+Dataset yang digunakan adalah:
+
+## SemCor-13
+
+Dataset berisi kalimat-kalimat yang telah dianotasi dengan sense WordNet.
+
+Kata ambigu yang digunakan:
+
+* case
+* face
+* form
+* head
+* interest
+* life
+* light
+* matter
+* point
+* state
+* time
+* way
+* work
+
+Struktur dataset:
+
+```text
+data/
+└── SemCor-13/
+    ├── case/
+    ├── face/
+    ├── form/
+    ├── head/
+    ├── ...
+```
+
+Setiap folder berisi:
+
+```text
+train.data.txt
+train.gold.txt
+
+test.data.txt
+test.gold.txt
+
+classes_map.txt
+```
+
+---
+
+# Arsitektur Sistem
+
+Sistem terdiri dari dua tahap utama.
+
+## Tahap 1 – Pembuatan Sense Vector
+
+File:
 
 ```bash
-$ git clone https://github.com/danlou/bert-disambiguation.git
-$ cd bert-disambiguation
-$ conda create -n bert-disambiguation python=3.6.5
-$ conda activate bert-disambiguation
-# $ conda deactivate  # to exit environment when done with project
+create_1nn_vecs.py
 ```
 
-### Additional Packages
+Proses:
 
-To install additional packages used by this project run:
+1. Membaca data training
+2. Mengambil embedding BERT untuk kata target
+3. Menghitung rata-rata embedding setiap sense
+4. Menyimpan hasil sebagai sense vector
+
+Ilustrasi:
+
+```text
+Kalimat Training
+        ↓
+     BERT
+        ↓
+ Contextual Embedding
+        ↓
+ Rata-rata per Sense
+        ↓
+ Sense Vector
+```
+
+Output:
+
+```text
+vectors/semcor13_test.txt
+```
+
+---
+
+## Tahap 2 – Evaluasi 1NN
+
+File:
 
 ```bash
-pip install -r requirements.txt
+eval_1nn.py
 ```
 
-The WordNet package for NLTK isn't installed by pip, but we can install it easily with:
+Proses:
+
+1. Membaca data test
+2. Mengambil embedding kata target
+3. Membandingkan embedding dengan seluruh sense vector
+4. Memilih sense dengan cosine similarity tertinggi
+5. Menghitung akurasi
+
+Ilustrasi:
+
+```text
+Kalimat Test
+      ↓
+    BERT
+      ↓
+Embedding Kata
+      ↓
+Cosine Similarity
+      ↓
+Sense Vector Terdekat
+      ↓
+Prediksi Sense
+```
+
+---
+
+# Modifikasi yang Dilakukan
+
+Repository asli hanya mendukung:
+
+```text
+CoarseWSD-20
+```
+
+Pada proyek ini dilakukan beberapa modifikasi:
+
+## 1. Menambahkan Reader SemCor-13
+
+File:
+
+```python
+semcor13_reader.py
+```
+
+Fungsi:
+
+* membaca data SemCor-13
+* membaca label sense
+* membentuk instance train dan test
+
+---
+
+## 2. Memodifikasi create_1nn_vecs.py
+
+Perubahan:
+
+* menambahkan dukungan dataset SemCor-13
+* menyesuaikan format pembacaan data
+* menangani variasi bentuk kata
+
+Contoh:
+
+```text
+work
+works
+worked
+working
+```
+
+---
+
+## 3. Memodifikasi eval_1nn.py
+
+Perubahan:
+
+* mengganti reader CoarseWSD menjadi SemCor-13
+* memperbaiki proses evaluasi
+* menangani prediksi kosong
+* membuat output summary otomatis
+
+---
+
+## 4. Memodifikasi nlm_encoder.py
+
+Perubahan:
+
+* kompatibilitas dengan Transformers terbaru
+* penanganan tokenisasi subword
+* perbaikan loading model BERT
+
+---
+
+# Cara Menjalankan Proyek
+
+## 1. Aktifkan Environment
 
 ```bash
-$ python -c "import nltk; nltk.download('wordnet')"
+source .venv/bin/activate
 ```
-*Note*: The WordNet package is only needed to replicate the experiments on WordNet, but not for the rest of the experiments (e.g. in CoarseWSD or any other dataset).
 
-# Feature Extraction
+---
 
-The feature extraction method used in the paper involves two steps: (1) computing sense embeddings from the training set and (2) leveraging those precomputed sense embeddings to disambiguate contextual embeddings by finding the most similar sense embedding.
-These two steps have separate scripts, which can be used as explained below.
-
-You may use the [create_1nn_vecs.py](https://github.com/danlou/bert-disambiguation/blob/master/create_1nn_vecs.py) script to create sense embeddings from a particular set from our CoarseWSD-20 datasets.
-
-    $ python create_1nn_vecs.py -nlm_id bert-base-uncased -dataset_id CoarseWSD-20 -out_path vectors/CoarseWSD-20.bert-base-uncased.txt
-
-If you want to train on a different training set, such as the balanced version of CoarseWSD-20, just replace '-dataset_id CoarseWSD-20' with '-dataset_id CoarseWSD-20_balanced'.
-
-Precomputed sense embeddings for the full CoarseWSD-20 training set are also available at [vectors](https://github.com/danlou/bert-disambiguation/tree/master/vectors).
-
-To evaluate the 1NN method, you may use the [eval_1nn.py](https://github.com/danlou/bert-disambiguation/blob/master/eval_1nn.py) script, providing paths for the test set and precomputed sense embeddings.
-
-    $ python eval_1nn.py -nlm_id bert-base-uncased -dataset_id CoarseWSD-20 -sv_path vectors/CoarseWSD-20.bert-base-uncased.txt
-
-# Fine-Tuning
-
-[WIP] This is still being merged. In the meantime, you can check the code [here](https://github.com/kiamehr74/CG20WSD-bert-baseline/blob/master/run.py) if interested.
-
-# FastText Baseline
-
-To run our fastText experiments, first follow [these](https://fasttext.cc/docs/en/support.html#building-fasttext-python-module) installation instructions.
-
-In case you're interested in running the fastText baseline with pretrained embeddings run:
+## 2. Membuat Sense Vector
 
 ```bash
-$ cd external/fastText  # from repo home
-$ wget https://dl.fbaipublicfiles.com/fasttext/vectors-english/crawl-300d-2M-subword.zip
-$ unzip crawl-300d-2M-subword.zip
+python create_1nn_vecs.py \
+-dataset_id SemCor-13 \
+-out_path vectors/semcor13_test.txt
 ```
 
-The [ftx_baseline.py](https://github.com/danlou/bert-disambiguation/blob/master/ftx_baseline.py) script handles both creating the fastText classification models (FTX-Base and FTX-Crawl) and evaluating.
+Output:
 
-To configure the script, you can edit the dataset_id and model_id variables starting at [line 86](https://github.com/danlou/bert-disambiguation/blob/master/ftx_baseline.py#L86).
-
-# Results
-
-Predictions from our experiments are available at [results](https://github.com/danlou/bert-disambiguation/tree/master/results/CoarseWSD-20).
-
-# Citation
-
-The reference paper is available [here]([https://arxiv.org/abs/2008.11608](https://direct.mit.edu/coli/article/47/2/387/98520/Analysis-and-Evaluation-of-Language-Models-for)):
-
-```bibtex
-@article{loureiro2021analysis,
-  title={Analysis and evaluation of language models for word sense disambiguation},
-  author={Loureiro, Daniel and Rezaee, Kiamehr and Pilehvar, Mohammad Taher and Camacho-Collados, Jose},
-  journal={Computational Linguistics},
-  volume={47},
-  number={2},
-  pages={387--443},
-  year={2021},
-  publisher={MIT Press One Rogers Street, Cambridge, MA 02142-1209, USA journals-info~…}
-}
+```text
+vectors/semcor13_test.txt
 ```
+
+---
+
+## 3. Menjalankan Evaluasi
+
+```bash
+python eval_1nn.py \
+-dataset_id SemCor-13 \
+-sv_path vectors/semcor13_test.txt
+```
+
+Output:
+
+```text
+results/SemCor-13/1nn/bert-base-uncased/
+```
+
+---
+
+# Hasil Evaluasi
+
+File:
+
+```text
+results/SemCor-13/1nn/bert-base-uncased/summary.csv
+```
+
+Contoh hasil:
+
+| Kata  | Akurasi |
+| ----- | ------- |
+| head  | 96.67%  |
+| point | 100.00% |
+| state | 86.27%  |
+| light | 83.33%  |
+| life  | 80.56%  |
+| time  | 72.86%  |
+| work  | 69.33%  |
+| face  | 38.10%  |
+| way   | 9.76%   |
+
+Hasil menunjukkan bahwa beberapa kata memiliki sense yang sangat mudah dibedakan (misalnya *point* dan *head*), sedangkan kata seperti *way* memiliki tingkat ambiguitas yang tinggi sehingga lebih sulit didisambiguasi.
+
+---
+
+# Struktur Folder
+
+```text
+bert-disambiguation-semcor/
+│
+├── data/
+│   └── SemCor-13/
+│
+├── vectors/
+│   └── semcor13_test.txt
+│
+├── results/
+│   └── SemCor-13/
+│
+├── create_1nn_vecs.py
+├── eval_1nn.py
+├── semcor13_reader.py
+├── nlm_encoder.py
+│
+└── README.md
+```
+
+---
+
+# Kesimpulan
+
+Pada proyek ini berhasil dilakukan:
+
+1. Adaptasi repository BERT Disambiguation untuk dataset SemCor-13
+
+2. Pembuatan sense vector menggunakan embedding BERT
+
+3. Implementasi klasifikasi Word Sense Disambiguation menggunakan metode 1NN
+
+4. Evaluasi pada 13 kata ambigu dalam dataset SemCor-13
+
+5. Penyimpanan hasil evaluasi dalam format CSV dan JSONL
+
+Hasil menunjukkan bahwa representasi kontekstual dari BERT mampu menangkap perbedaan makna kata dengan baik pada sebagian besar kasus Word Sense Disambiguation. 
